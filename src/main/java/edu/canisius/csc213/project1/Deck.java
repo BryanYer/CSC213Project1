@@ -22,6 +22,9 @@ public class Deck {
 	public Deck(int size) {
 		// TODO: Validate size (must be a multiple of 4 and at most 52).
 		// TODO: Initialize the deck with the correct cards.
+        if (size % 4 != 0 || size > 52 || size < 0){
+            throw new IllegalArgumentException("Illegal deck size");
+        }
 	}
 	
 	/**

@@ -21,5 +21,11 @@ public class UniqueHands {
 	}
 	
 	// TODO: Implement countAttemptsToSeeAllHands()
+    static int countAttemptsToSeeAllHands(int deckSize, int handSize){
+        return 0;
+    }
 	// TODO: Implement calculateTotalUniqueHands()
+    static int calculateTotalUniqueHands(int deckSize, int handSize){
+        return 0;
+    }
 }
