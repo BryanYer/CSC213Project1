@@ -87,5 +87,23 @@ class DeckTest {
 		assertEquals(0, deck.size());
 		assertThrows(NoSuchElementException.class, deck::draw);
 	}
+
+	/**
+	 * Tests the {@link Deck#size()} method.
+	 */
+	@Test void testDeckSizeMethod() {
+		// Create a new deck with size 8 and makes sure that deck.size() correctly returns 8
+		final var deck = new Deck(8);
+		assertEquals(8, deck.size());
+
+		// Make sure the size decreases after one draw
+		deck.draw();
+		assertEquals(7, deck.size());
+
+		// Continue with more draws
+		deck.draw();
+		deck.draw();
+		assertEquals(5, deck.size());
+	}
 }
 

@@ -1,7 +1,9 @@
 package edu.canisius.csc213.project1;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Represents a deck of playing cards with a configurable size.
@@ -12,7 +14,7 @@ public class Deck {
 	 * All the cards that are currently in the deck.
 	 */
 	private final List<Card> cards = new ArrayList<>();
-	
+
 	/**
 	 * Creates a deck with a given size. The size must be a multiple of 4 and at most 52.
 	 *
@@ -20,18 +22,31 @@ public class Deck {
 	 * @throws IllegalArgumentException if size is invalid.
 	 */
 	public Deck(int size) {
-		// TODO: Validate size (must be a multiple of 4 and at most 52).
-		// TODO: Initialize the deck with the correct cards.
-        if (size % 4 != 0 || size > 52 || size < 0){
-            throw new IllegalArgumentException("Illegal deck size");
+		// Validate size (must be a multiple of 4 and at most 52).
+        if (size % 4 != 0 || size > 52 || size <= 0){
+            throw new IllegalArgumentException("Illegal deck size.");
         }
+
+		// Initialize the deck with the correct cards.
+		Card.Rank[] rankList = Card.Rank.values();
+		Card.Suit[] suitList = Card.Suit.values();
+
+		var numRanks = size / 4;
+
+		// Build the deck starting with Aces.
+		for (Card.Suit suit : suitList) {
+			for (var i = rankList.length - 1; i >= rankList.length - numRanks; i--){
+				cards.add(new Card(suit, rankList[i]));
+			}
+		}
 	}
 	
 	/**
 	 * Shuffles the deck.
 	 */
 	public void shuffle() {
-		// TODO: Implement shuffle logic.
+		// Implement shuffle logic.
+		Collections.shuffle(cards);
 	}
 	
 	/**
@@ -41,8 +56,11 @@ public class Deck {
 	 * @throws NoSuchElementException if the deck is empty.
 	 */
 	public Card draw() {
-		// TODO: Implement draw logic.
-		return null;
+		// Implement draw logic.
+		if (cards.isEmpty()){
+			throw new NoSuchElementException("Deck is empty.");
+		}
+		return cards.removeLast();
 	}
 	
 	/**
@@ -51,7 +69,7 @@ public class Deck {
 	 * @return The number of cards left.
 	 */
 	public int size() {
-		// TODO: Implement size method.
-		return 0;
+		// Implement size method.
+		return cards.size();
 	}
 }
