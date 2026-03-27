@@ -4,9 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests the {@link UniqueHands} {@code class}.
@@ -46,7 +44,11 @@ class UniqueHandsTest {
 		assertTrue(attempts7 > attempts6, "Increasing hand size should increase attempts.");
 	}
 
+	/**
+	 * Tests {@link UniqueHands#factorial(int)} with the inputs: -3, 0, 5, and 7.
+	 */
 	@Test void testFactorial() {
+		assertThrows(IllegalArgumentException.class, () -> UniqueHands.factorial(-3));
 		assertEquals(new BigInteger("1"), UniqueHands.factorial(0));
 		assertEquals(new BigInteger("120"), UniqueHands.factorial(5));
 		assertEquals(new BigInteger("5040"), UniqueHands.factorial(7));

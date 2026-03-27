@@ -53,10 +53,16 @@ public class UniqueHands {
 	 * @return The factorial of the input number.
 	 */
 	public static BigInteger factorial(int num){
+		// Test for negative number
+		if (num < 0) {
+			throw new IllegalArgumentException("Input must not be a negative.");
+		}
+		// 0! = 0
 		BigInteger result = new BigInteger("1");
 		if (num == 0){
 			return result;
 		}
+
 		for (var i = num; i > 0; i--){
 			result = result.multiply(new BigInteger(String.valueOf(i)));
 		}
