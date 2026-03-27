@@ -27,10 +27,11 @@ public class Deck {
             throw new IllegalArgumentException("Illegal deck size.");
         }
 
-		// Initialize the deck with the correct cards.
+		// Saves the enum values to variables (so I need to write less later)
 		Card.Rank[] rankList = Card.Rank.values();
 		Card.Suit[] suitList = Card.Suit.values();
 
+		// Initialize the deck with the correct cards.
 		var numRanks = size / 4;
 
 		// Build the deck starting with Aces.
