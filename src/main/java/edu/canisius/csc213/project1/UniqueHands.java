@@ -15,16 +15,16 @@ import java.util.List;
 public class UniqueHands {
 
 	public static void main(String[] args) {
-		int[] deckSizes = {24, 28}; // Deck sizes to test
-		int[] handSizes = {6, 7}; // Hand sizes to test
-		int trials = 5; // Number of trials per deck-hand combination
+		int[] deckSizes = {24, 28}; // Deck sizes to test.
+		int[] handSizes = {6, 7}; // Hand sizes to test.
+		int trials = 5; // Number of trials per deck-hand combination.
 		// Name of the CSV file.
 		final String fileName = "uniqueHandsData.csv";
 
 		System.out.println("🃏 Deck Simulation: How long to see every possible hand?");
 		System.out.println("-".repeat(100));
 
-		// Start the CSV file.
+		// Start the CSV file with a try with resources statement.
 		try (var writer = new PrintWriter(new FileOutputStream(fileName))) {
 			writer.println("Deck Size,Hand Size,Trial,Attempts,Time (s)");
 		}
@@ -33,11 +33,12 @@ public class UniqueHands {
 
 		// Outer loop: Iterates through deck sizes (24, 28).
 		for (var i : deckSizes){
-			// Inner loop: Iterates through hand sizes (6, 7)
+			// Inner loop: Iterates through hand sizes (6, 7).
 			for (var j : handSizes){
 				// Inside inner loop: Run 5 trials, track time and attempts, and compute averages.
 				var avgAttempts = 0;
 				var avgTime = 0.0;
+				// Run all 5 trials.
 				for (var k = 0; k <trials; k++){
 					var startTime = System.nanoTime();
 					var attempts = countAttemptsToSeeAllHands(i, j);
@@ -45,14 +46,16 @@ public class UniqueHands {
 					avgTime += elapsedTime;
 					avgAttempts += attempts;
 					System.out.printf("Deck Size: %d | Hand Size: %d | Trial %d | Attempts: %d | Time: %.3fs%n", i, j, k + 1, attempts, elapsedTime);
+					// Print information about the simulation to a csv file using a try with resources statement.
+					// It prints: Deck size,Hand size,Trial #,Attempts,time.
 					try (var writer = new PrintWriter(new FileOutputStream(fileName, true))) {
 						writer.printf("%d,%d,%d,%d,%.3fs%n", i, j, k + 1, attempts, elapsedTime);
 					}
 					catch (IOException e) { throw new RuntimeException(e); }
 				}
 				// Calculate averages.
-				avgTime = avgTime / trials;
-				avgAttempts = avgAttempts / trials;
+				avgTime /= trials;
+				avgAttempts /= trials;
 
 				// Print final stats.
 				System.out.printf("✅ Deck Size: %d | Hand Size: %d | Avg Attempts: %d | Avg Time: %.3fs%n", i, j, avgAttempts, avgTime);
@@ -127,16 +130,16 @@ public class UniqueHands {
 	 * @return The factorial of the input number.
 	 */
 	public static BigInteger factorial(int num){
-		// Test for negative number
+		// Test for negative number.
 		if (num < 0) {
 			throw new IllegalArgumentException("Input must not be a negative.");
 		}
-		// 0! = 0
+		// 0! = 0.
 		BigInteger result = new BigInteger("1");
 		if (num == 0){
 			return result;
 		}
-
+		// Starts at the input and multiplies it with result, then continues subtracting by 1 and repeating until it reaches 1.
 		for (var i = num; i > 0; i--){
 			result = result.multiply(new BigInteger(String.valueOf(i)));
 		}

@@ -27,7 +27,7 @@ public class Deck {
             throw new IllegalArgumentException("Illegal deck size.");
         }
 
-		// Saves the enum values to variables (so I need to write less later)
+		// Saves the enum values to variables.
 		Card.Rank[] rankList = Card.Rank.values();
 		Card.Suit[] suitList = Card.Suit.values();
 
@@ -36,6 +36,7 @@ public class Deck {
 
 		// Build the deck starting with Aces.
 		for (Card.Suit suit : suitList) {
+			// Traverses the list of possible rank enum values in reverse order, so it starts with aces.
 			for (var i = rankList.length - 1; i >= rankList.length - numRanks; i--){
 				cards.add(new Card(suit, rankList[i]));
 			}
