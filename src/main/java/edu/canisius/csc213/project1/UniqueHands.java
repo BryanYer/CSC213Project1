@@ -2,6 +2,7 @@ package edu.canisius.csc213.project1;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
@@ -9,34 +10,43 @@ import java.util.List;
  * UniqueHands class to analyze how long it takes to see every possible hand for different deck sizes and hand sizes.
  */
 public class UniqueHands {
-	
+
 	public static void main(String[] args) {
 		int[] deckSizes = {24, 28}; // Deck sizes to test
 		int[] handSizes = {6, 7}; // Hand sizes to test
 		int trials = 5; // Number of trials per deck-hand combination
-		
+
 		System.out.println("🃏 Deck Simulation: How long to see every possible hand?");
 		System.out.println("-".repeat(100));
-		
+
 
 		// Outer loop: Iterates through deck sizes (24, 28).
 		for (var i : deckSizes){
 			// Inner loop: Iterates through hand sizes (6, 7)
 			for (var j : handSizes){
 				// Inside inner loop: Run 5 trials, track time and attempts, and compute averages.
+				var avgAttempts = 0;
+				var avgTime = 0.0;
 				for (var k = 0; k <trials; k++){
 					var startTime = System.nanoTime();
 					var attempts = countAttemptsToSeeAllHands(i, j);
-					var elapsedTime = (System.nanoTime() - startTime / 1_000_000_000.0) ;
-					System.out.printf("""
-                            Deck Size: %d | Hand Size: %d | Trial %d | Attempts: %d | Time: %fs
-                            %n""", i, j, k + 1, attempts, elapsedTime);
+					var elapsedTime = (1.0 / 1_000_000_000.0) * (System.nanoTime() - startTime) ;
+					avgTime += elapsedTime;
+					avgAttempts += attempts;
+					System.out.printf("Deck Size: %d | Hand Size: %d | Trial %d | Attempts: %d | Time: %.3fs%n", i, j, k + 1, attempts, elapsedTime);
 				}
+				// Calculate averages.
+				avgTime = avgTime / trials;
+				avgAttempts = avgAttempts / trials;
+
+				// Print final stats.
+				System.out.printf("✅ Deck Size: %d | Hand Size: %d | Avg Attempts: %d | Avg Time: %.3fs%n", i, j, avgAttempts, avgTime);
+				System.out.println("-".repeat(100));
 
 			}
 		}
 
-		
+
 	}
 
 	/**
@@ -64,6 +74,10 @@ public class UniqueHands {
 			for (var i = 0; i < handSize; i++){
 				cards.add(deck.draw());
 			}
+			// Sorts the hand so that hands with the same cards in a different order will count as the same.
+			// Learned this from stack overflow :)
+			cards.sort(Comparator.comparing(Card::suit).thenComparing(Card::rank));
+
 			// Adds the hand to the list of seen hands and updates the status variables.
 			handsList.add(cards);
 			handsSeen = handsList.size();
@@ -72,14 +86,10 @@ public class UniqueHands {
 			attempts++;
 			// Prints progress every 100,000 attempts.
 			if (attempts % 100_000 == 0){
-				System.out.printf("""
-                        %f%s coverage reached after %d attempts (Unique Hands: %d / %d | Needed: %d)
-                        %n""", percentCover, "%", attempts, handsSeen, handsPossible, handsLeft);
+				System.out.printf("%.2f%s coverage reached after %d attempts (Unique Hands: %d / %d | Needed: %d)%n", percentCover, "%", attempts, handsSeen, handsPossible, handsLeft);
 			}
 		}
-		System.out.printf("""
-                ✅ %f%s coverage reached after %d attempts (Unique Hands: %d / %d | Needed: %d)
-                %n""", percentCover, "%", attempts, handsSeen, handsPossible, handsLeft);
+		System.out.printf("✅ %.2f%s coverage reached after %d attempts (Unique Hands: %d / %d | Needed: %d)%n", percentCover, "%", attempts, handsSeen, handsPossible, handsLeft);
         return attempts;
     }
 

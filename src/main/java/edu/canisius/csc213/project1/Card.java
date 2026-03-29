@@ -17,4 +17,5 @@ public record Card(Suit suit, Rank rank) {
     public String toString(){
         return "%s of %s".formatted(rank, suit);
     }
+
 }
