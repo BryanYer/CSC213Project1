@@ -1,5 +1,8 @@
 package edu.canisius.csc213.project1;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -15,9 +18,17 @@ public class UniqueHands {
 		int[] deckSizes = {24, 28}; // Deck sizes to test
 		int[] handSizes = {6, 7}; // Hand sizes to test
 		int trials = 5; // Number of trials per deck-hand combination
+		// Name of the CSV file.
+		final String fileName = "uniqueHandsData.csv";
 
 		System.out.println("🃏 Deck Simulation: How long to see every possible hand?");
 		System.out.println("-".repeat(100));
+
+		// Start the CSV file.
+		try (var writer = new PrintWriter(new FileOutputStream(fileName))) {
+			writer.println("Deck Size,Hand Size,Trial,Attempts,Time (s)");
+		}
+		catch (IOException e) { throw new RuntimeException(e); }
 
 
 		// Outer loop: Iterates through deck sizes (24, 28).
@@ -34,6 +45,10 @@ public class UniqueHands {
 					avgTime += elapsedTime;
 					avgAttempts += attempts;
 					System.out.printf("Deck Size: %d | Hand Size: %d | Trial %d | Attempts: %d | Time: %.3fs%n", i, j, k + 1, attempts, elapsedTime);
+					try (var writer = new PrintWriter(new FileOutputStream(fileName, true))) {
+						writer.printf("%d,%d,%d,%d,%.3fs%n", i, j, k + 1, attempts, elapsedTime);
+					}
+					catch (IOException e) { throw new RuntimeException(e); }
 				}
 				// Calculate averages.
 				avgTime = avgTime / trials;
@@ -63,6 +78,7 @@ public class UniqueHands {
 		var handsPossible = (calculateTotalUniqueHands(deckSize, handSize)).longValue();
 		var handsLeft = (calculateTotalUniqueHands(deckSize, handSize)).longValue();
 		var attempts = 0;
+
 		// Repeats until every possible hand is in the HashSet.
 		while (handsList.size() < handsPossible){
 			// List that will contain the new hand that is viewed.
@@ -86,10 +102,10 @@ public class UniqueHands {
 			attempts++;
 			// Prints progress every 100,000 attempts.
 			if (attempts % 100_000 == 0){
-				System.out.printf("%.2f%s coverage reached after %d attempts (Unique Hands: %d / %d | Needed: %d)%n", percentCover, "%", attempts, handsSeen, handsPossible, handsLeft);
+				System.out.printf("%.3f%% coverage reached after %d attempts (Unique Hands: %d / %d | Needed: %d)%n", percentCover, attempts, handsSeen, handsPossible, handsLeft);
 			}
 		}
-		System.out.printf("✅ %.2f%s coverage reached after %d attempts (Unique Hands: %d / %d | Needed: %d)%n", percentCover, "%", attempts, handsSeen, handsPossible, handsLeft);
+		System.out.printf("✅ %.3f%% coverage reached after %d attempts (Unique Hands: %d / %d | Needed: %d)%n", percentCover, attempts, handsSeen, handsPossible, handsLeft);
         return attempts;
     }
 
