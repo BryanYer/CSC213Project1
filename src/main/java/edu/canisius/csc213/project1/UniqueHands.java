@@ -141,7 +141,7 @@ public class UniqueHands {
 		}
 		// Starts at the input and multiplies it with result, then continues subtracting by 1 and repeating until it reaches 1.
 		for (var i = num; i > 0; i--){
-			result = result.multiply(new BigInteger(String.valueOf(i)));
+			result = result.multiply(BigInteger.valueOf(i));
 		}
 		return result;
 	}
