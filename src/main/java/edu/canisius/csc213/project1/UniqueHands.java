@@ -32,24 +32,24 @@ public class UniqueHands {
 
 
 		// Outer loop: Iterates through deck sizes (24, 28).
-		for (var i : deckSizes){
+		for (var deckSize : deckSizes){
 			// Inner loop: Iterates through hand sizes (6, 7).
-			for (var j : handSizes){
+			for (var handSize : handSizes){
 				// Inside inner loop: Run 5 trials, track time and attempts, and compute averages.
 				var avgAttempts = 0;
 				var avgTime = 0.0;
 				// Run all 5 trials.
 				for (var k = 0; k <trials; k++){
 					var startTime = System.nanoTime();
-					var attempts = countAttemptsToSeeAllHands(i, j);
+					var attempts = countAttemptsToSeeAllHands(deckSize, handSize);
 					var elapsedTime = (1.0 / 1_000_000_000.0) * (System.nanoTime() - startTime) ;
 					avgTime += elapsedTime;
 					avgAttempts += attempts;
-					System.out.printf("Deck Size: %d | Hand Size: %d | Trial %d | Attempts: %d | Time: %.3fs%n", i, j, k + 1, attempts, elapsedTime);
+					System.out.printf("Deck Size: %d | Hand Size: %d | Trial %d | Attempts: %d | Time: %.3fs%n", deckSize, handSize, k + 1, attempts, elapsedTime);
 					// Print information about the simulation to a csv file using a try with resources statement.
 					// It prints: Deck size,Hand size,Trial #,Attempts,time.
 					try (var writer = new PrintWriter(new FileOutputStream(fileName, true))) {
-						writer.printf("%d,%d,%d,%d,%.3fs%n", i, j, k + 1, attempts, elapsedTime);
+						writer.printf("%d,%d,%d,%d,%.3fs%n", deckSize, handSize, k + 1, attempts, elapsedTime);
 					}
 					catch (IOException e) { throw new RuntimeException(e); }
 				}
@@ -58,7 +58,7 @@ public class UniqueHands {
 				avgAttempts /= trials;
 
 				// Print final stats.
-				System.out.printf("✅ Deck Size: %d | Hand Size: %d | Avg Attempts: %d | Avg Time: %.3fs%n", i, j, avgAttempts, avgTime);
+				System.out.printf("✅ Deck Size: %d | Hand Size: %d | Avg Attempts: %d | Avg Time: %.3fs%n", deckSize, handSize, avgAttempts, avgTime);
 				System.out.println("-".repeat(100));
 
 			}
