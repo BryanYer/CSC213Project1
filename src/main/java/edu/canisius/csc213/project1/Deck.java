@@ -28,14 +28,14 @@ public class Deck {
         }
 
 		// Saves the enum values to variables.
-		Card.Rank[] rankList = Card.Rank.values();
-		Card.Suit[] suitList = Card.Suit.values();
+		var rankList = Card.Rank.values();
+		var suitList = Card.Suit.values();
 
 		// Initialize the deck with the correct cards.
 		var numRanks = size / 4;
 
 		// Build the deck starting with Aces.
-		for (Card.Suit suit : suitList) {
+		for (var suit : suitList) {
 			// Traverses the list of possible rank enum values in reverse order, so it starts with aces.
 			for (var i = rankList.length - 1; i >= rankList.length - numRanks; i--){
 				cards.add(new Card(suit, rankList[i]));
