@@ -16,10 +16,10 @@ class UniqueHandsTest {
 	 * the total number of combinations is being calculated correctly.
 	 */
 	@Test void testCalculateTotalUniqueHands() {
-		assertEquals(new BigInteger("134596"), UniqueHands.calculateTotalUniqueHands(24, 6)); // Expected C(24,6)
-		assertEquals(new BigInteger("376740"), UniqueHands.calculateTotalUniqueHands(28, 6)); // C(28,6)
-		assertEquals(new BigInteger("906192"), UniqueHands.calculateTotalUniqueHands(32, 6)); // C(32,6)
-		assertEquals(new BigInteger("346104"), UniqueHands.calculateTotalUniqueHands(24, 7)); // C(24,7)
+		assertEquals(134596, UniqueHands.calculateTotalUniqueHands(24, 6)); // Expected C(24,6)
+		assertEquals(376740, UniqueHands.calculateTotalUniqueHands(28, 6)); // C(28,6)
+		assertEquals(906192, UniqueHands.calculateTotalUniqueHands(32, 6)); // C(32,6)
+		assertEquals(346104, UniqueHands.calculateTotalUniqueHands(24, 7)); // C(24,7)
 	}
 
 	/**

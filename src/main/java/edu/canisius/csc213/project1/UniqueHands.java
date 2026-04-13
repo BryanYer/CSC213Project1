@@ -78,8 +78,8 @@ public class UniqueHands {
 		HashSet<List<Card>> handsList = new HashSet<>(handSize);
 		var percentCover = 0.0;
 		var handsSeen = 0;
-		var handsPossible = (calculateTotalUniqueHands(deckSize, handSize)).longValue();
-		var handsLeft = (calculateTotalUniqueHands(deckSize, handSize)).longValue();
+		var handsPossible = (calculateTotalUniqueHands(deckSize, handSize));
+		var handsLeft = (calculateTotalUniqueHands(deckSize, handSize));
 		var attempts = 0;
 
 		// Repeats until every possible hand is in the HashSet.
@@ -119,8 +119,8 @@ public class UniqueHands {
 	 * @param handSize Number of cards in a hand.
 	 * @return A BigInteger value of the number of unique hand combinations
 	 */
-    public static BigInteger calculateTotalUniqueHands(int deckSize, int handSize){
-        return (factorial(deckSize).divide(factorial(handSize).multiply(factorial(deckSize - handSize))));
+    public static long calculateTotalUniqueHands(int deckSize, int handSize){
+        return (factorial(deckSize).divide(factorial(handSize).multiply(factorial(deckSize - handSize)))).longValueExact();
     }
 
 	/**
