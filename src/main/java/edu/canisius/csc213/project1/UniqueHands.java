@@ -78,8 +78,8 @@ public class UniqueHands {
 		HashSet<List<Card>> handsList = new HashSet<>(handSize);
 		var percentCover = 0.0;
 		var handsSeen = 0;
-		var handsPossible = (calculateTotalUniqueHands(deckSize, handSize));
-		var handsLeft = (calculateTotalUniqueHands(deckSize, handSize));
+		var handsPossible = calculateTotalUniqueHands(deckSize, handSize);
+		var handsLeft = calculateTotalUniqueHands(deckSize, handSize);
 		var attempts = 0;
 
 		// Repeats until every possible hand is in the HashSet.
