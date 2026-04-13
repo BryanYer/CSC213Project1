@@ -42,7 +42,7 @@ public class UniqueHands {
 				for (var k = 0; k <trials; k++){
 					var startTime = System.nanoTime();
 					var attempts = countAttemptsToSeeAllHands(deckSize, handSize);
-					var elapsedTime = (1.0 / 1_000_000_000.0) * (System.nanoTime() - startTime) ;
+					var elapsedTime = (System.nanoTime() - startTime) / 1_000_000_000.0;
 					avgTime += elapsedTime;
 					avgAttempts += attempts;
 					System.out.printf("Deck Size: %d | Hand Size: %d | Trial %d | Attempts: %d | Time: %.3fs%n", deckSize, handSize, k + 1, attempts, elapsedTime);
